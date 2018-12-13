@@ -1,64 +1,28 @@
-##Needs refactoring
-state = '#..######..#....#####..###.##..#######.####...####.##..#....#.##.....########.#...#.####........#.#.'
+INPUT = 'day12_input.txt'
+inputstr= open(INPUT).read()
+lines = inputstr.splitlines()
+state = lines[0]
 
-# state = '#..#.#..##......###...###'
+spawn_plant = [line[0:5] for line in lines[1:] if line[9] == '#']
+offset = 0
 
-rules = open('day12_input.txt').read() 
-# rules='''...## => #
-# ..#.. => #
-# .#... => #
-# .#.#. => #
-# .#.## => #
-# .##.. => #
-# .#### => #
-# #.#.# => #
-# #.### => #
-# ##.#. => #
-# ##.## => #
-# ###.. => #
-# ###.# => #
-# ####. => #'''
-
-create_plant = [line[0:5] for line in rules.splitlines() if line[9] == '#']
-
-shift = 1000
-state = '.'*shift + state + '.'*shift
-count = 0
-total = 0
-for generation in range(10000):
+for generation in range(20):
+    state = '....' + state + '....'    
     new_state = state
-    for i in range(2,len(state)):    
+    offset+=4
+    for i in range(2,len(state)-2):    
         current_set = state[i-2:i+3]
-        
-        if current_set in create_plant:
-            new_state= new_state[:i] + "#" + new_state[i+2:]
+        if current_set in spawn_plant:
+            new_state= new_state[:i] + "#" + new_state[i+1:]
         else:
-            new_state= new_state[:i] + "." + new_state[i+2:]
-    
+            new_state= new_state[:i] + "." + new_state[i+1:]
     state = new_state
-    
-    prev_total = total 
+
+def compute_total(state, offset):
     total = 0
-    
-    
-    
     for i,pot in enumerate(state):
+        print(i-offset, pot) 
         if pot == '#':
-            total+= i-shift
-    nplants = sum(c=='#' for c in state)
-    print(nplants)
-    
-    if nplants >=63:
-        count+=1
-    if count == 100:
-        break
-    
-    print(f'{generation+1}, {total}, {total - prev_total}')
-    total = prev_total
-
-# print(state)
-
-# print(state)
-
-        
-
+            total+= i-offset
+    return total
+print(compute_total(state, offset))
