@@ -86,6 +86,9 @@ def Cart(agrid):
                 return self.state == other.state
             else:
                 return self.state == other
+
+        def __lt__(self, other):
+            return self.position < other.position
         
         def __repr__(self):
             return self.state
@@ -100,14 +103,6 @@ def setup_grid(grid):
                 c = cart_factory(grid[i][j], coordinates =[i,j])
                 grid[i][j] = c
                 carts.append(c)
-    return carts
-
-def find_carts(grid, cls):
-    carts = []
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            if isinstance(grid[i][j], cls):
-                carts.append(grid[i][j])
     return carts
 
 carts = setup_grid(deepcopy(grid))
@@ -128,13 +123,11 @@ print(x,y)
 #Part2
 
 carts = setup_grid(deepcopy(grid))
-grid = carts[0].grid
-cls = type(carts[0])
 
 while sum(c != 'X' for c in carts) > 1 :
     for cart in carts:
         cart.step()
-    carts = find_carts(grid, cls)
+    carts.sort()
 
 #Print the answer to part 2
 y,x = cart.position
