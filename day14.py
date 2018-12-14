@@ -1,6 +1,7 @@
-input = '846021'
+input = '920831'
 
 from collections import deque 
+import time
 
 length = len(str(input))
 scores = [3,7]
@@ -9,6 +10,8 @@ elves = [0,1]
 
 cond1 = [int(n) for n in str(input)] != scores[-length:]
 cond2 = [int(n) for n in str(input)] != scores[-length-1:-1]
+
+t0 = time.time()
 
 while cond1 and cond2  :
     new = [int(n) for n in str(scores[elves[0]] + scores[elves[1]])]
@@ -28,3 +31,5 @@ if not cond1:
 elif not cond2:
     print(len(scores[:-length-1]))
 
+t = time.time() - t0
+print('%f'%(t,))
