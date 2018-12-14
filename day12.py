@@ -1,3 +1,5 @@
+##Part one only
+
 INPUT = 'day12_input.txt'
 inputstr= open(INPUT).read()
 lines = inputstr.splitlines()
@@ -21,7 +23,6 @@ for generation in range(20):
 def compute_total(state, offset):
     total = 0
     for i,pot in enumerate(state):
-        print(i-offset, pot) 
         if pot == '#':
             total+= i-offset
     return total
