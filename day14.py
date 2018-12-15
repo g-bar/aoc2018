@@ -1,35 +1,29 @@
-input = '920831'
-
-from collections import deque 
-import time
+input = '99999'
 
 length = len(str(input))
 scores = [3,7]
-nrecipes = 2
-elves = [0,1]
+digits = [int(n) for n in str(input)]
+elf1 = 0
+elf2 = 1
 
-cond1 = [int(n) for n in str(input)] != scores[-length:]
-cond2 = [int(n) for n in str(input)] != scores[-length-1:-1]
-
-t0 = time.time()
+cond1 = digits != scores[-length:]
+cond2 = digits != scores[-length-1:-1]
 
 while cond1 and cond2  :
-    new = [int(n) for n in str(scores[elves[0]] + scores[elves[1]])]
-    nrecipes += len(new)
-    scores.extend(new)    
-    for i, elf in enumerate(elves):
-        elves[i] += scores[elf] + 1
-        elves[i] %= len(scores)
-
-    cond1 = [int(n) for n in str(input)] != scores[-length:]
-    cond2 = [int(n) for n in str(input)] != scores[-length-1:-1]
+    total = scores[elf1] + scores[elf2]
+    new = divmod(total, 10) if total >= 10 else (total,)
     
-    print(nrecipes)
+    scores.extend(new)    
+    
+    
+    elf1 = (elf1 + 1 + scores[elf1]) % len(scores)
+    elf2 = (elf2 + 1 + scores[elf2]) % len(scores)
+    
+
+    cond1 = digits != scores[-length:]
+    cond2 = digits != scores[-length-1:-1]
 
 if not cond1:
     print(len(scores[:-length]))
 elif not cond2:
     print(len(scores[:-length-1]))
-
-t = time.time() - t0
-print('%f'%(t,))
