@@ -2,6 +2,27 @@ import re
 from collections import defaultdict
 from collections import Counter
 from itertools import dropwhile
+
+__all__ = [
+    'mapping',
+    'addr',
+    'addi',
+    'mulr',
+    'muli',
+    'banr',
+    'bani',
+    'borr',
+    'bori',
+    'setr',
+    'seti',
+    'gtir',
+    'gtri',
+    'gtrr',
+    'eqir',
+    'eqrr',
+    'eqri'
+]
+
 inplines = open('day16_input.txt').read().splitlines()
 count = 0
 counter = defaultdict(Counter)
@@ -122,7 +143,7 @@ for b, a, i in zip(before, after, opcode):
     if opcounter >= 3:
         samplecounter+=1
 
-print(samplecounter)
+# print(samplecounter)
 
 counters = sorted(list(counter.items()), key= lambda t: len(t[1]))
 
@@ -141,11 +162,13 @@ while len(assigned)< 16:
                 if k in assigned:
                     del counter[k]
 
-r = [0,0,0,0]
+
+if __name__ == "__main__":
+    r = [0,0,0,0]
 
 
-for _, line in dropwhile(lambda t: t[0] < line_index, enumerate(inplines)):    
-    opid, *in_ = [int(n) for n in pat2.findall(line)]
-    mapping[opid](r,in_)
+    for _, line in dropwhile(lambda t: t[0] < line_index, enumerate(inplines)):    
+        opid, *in_ = [int(n) for n in pat2.findall(line)]
+        mapping[opid](r,in_)
 
-print(r)
+    print(r)
