@@ -15,17 +15,17 @@ for lines in map(pat.findall, inplines):
 pos = np.array(positions) 
 vels = np.array(velocities)
 
-##FAILED SEE REDDIT SOLUTIONS
-area = float('inf')
-for i in range(1000000):
-    pos += vels
+##DOESN'T WORK
+# area = float('inf')
+# for i in range(1000000):
+#     pos += vels
     
-    min_ = pos.min(axis=0)
-    max_ = pos.max(axis=0)
-    print(max_,min_)
-    len = max_ - min_
-    print(len)
-    iarea = len[0] * len[1]
+#     min_ = pos.min(axis=0)
+#     max_ = pos.max(axis=0)
+#     print(max_,min_)
+#     len = max_ - min_
+#     print(len)
+#     iarea = len[0] * len[1]
 
-    area = min(area, iarea)
-    print(area)
+#     area = min(area, iarea)
+#     print(area)
